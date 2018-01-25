@@ -8,7 +8,7 @@ ip = "localhost"
 client = MongoClient(ip, int(port))
 
 
-def connect_collection(document, source):
+def insert_document2mongo(documents, source):
     """
 
     :source: str, the name of the desired collection in db
@@ -16,7 +16,7 @@ def connect_collection(document, source):
     db = client["aerotropolis"]         
     db.authenticate(user, pwd)
     collection = eval("db." + source)
-    collection.insert(document)
+    collection.insert_many(documents)
 
     return collection
 
