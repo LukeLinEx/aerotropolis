@@ -16,8 +16,13 @@ def insert_document2mongo(documents, source):
     db = client["aerotropolis"]         
     db.authenticate(user, pwd)
     collection = eval("db." + source)
-    collection.insert_many(documents)
 
-    return collection
+    if len(documents)==0:
+        print("No mew piece today")
+    else:
+        collection.insert_many(documents)
+        
+
+    #return collection
 
 
