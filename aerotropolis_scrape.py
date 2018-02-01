@@ -1,7 +1,46 @@
+#coding:utf-8
+
 import re
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from taoyuan_aerotropolis.helpers import *
+
+class TYCGCollecting(object):
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def get_interested_content(content_url):
+        content_soup = BeautifulSoup(requests.get(content_url).text)
+        paras = content_soup.find_all("p")
+
+        if interested_words_exist(paras):
+            return "<br><br>".join([str(p) for p in paras])
+
+    def collect_interested_news(self, start_date):
+        url = "http://www.tycg.gov.tw/ch/home.jsp?intpage=&id=9&parentpath=0%2C1&qptdate={start_date}&showedate=&qdldate=&keyword=請輸入關鍵字&page=1&pagesize=311".format(
+            start_date = str(start_date.date())
+        )
+
+        soup = BeautifulSoup(requests.get(url).text)
+        lst = soup.find_all("tr", {"class": "list"})
+        collection = []
+
+        for item in lst:
+            date_released = item.find("td", {"class":"post_date"}).text
+            date_released = str2date(date_released)
+            title = item.find("a", {"class":"list_a"}).get("title")
+
+            content_url = url + "&" + item.find("a", {"class":"list_a"}).get("href")
+            content = self.get_interested_content(content_url)
+            if content:
+                collection.append({
+                    "title": title, "date_released": date_released, "url":content_url, "content": content
+                })
+
+        return collection
+
 
 class UdnCollecting(object):
     def __init__(self):
@@ -65,8 +104,6 @@ class UdnCollecting(object):
 
 
 if __name__ == "__main__":
-	earliest = datetime.today() - timedelta(days=50)
-	tmp = sorted(UdnCollecting().collect_udn(earliest), key=lambda doc: doc["date_released"])
-	for doc in tmp:
-		print(doc["date_released"], doc["title"])
+	earliest = datetime(2018,1,30)
+	TYCGCollecting().collect_interested_news(earliest)
 
