@@ -3,7 +3,7 @@
 import re
 from datetime import datetime
 
-words_interested = ["航空城", "桃機", "桃捷", "機捷"]
+words_interested = ["航空城", "桃機", "桃捷", "機捷", "機場捷運", "工程", "通車", "交通", "運輸", "重劃", "青埔"]
 
 
 def roc2gregorian(year):
