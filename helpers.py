@@ -3,11 +3,11 @@
 import re
 from datetime import datetime
 
-words_interested = ["航空城", "桃機", "桃捷"]
+words_interested = ["航空城", "桃機", "桃捷", "機捷"]
 
 
 def roc2gregorian(year):
-    if isinstance(year, str) or isinstance(year, unicode):
+    if isinstance(year, str):
         year = str(int(year)+1911)
     else:
         year = str(year + 1911)

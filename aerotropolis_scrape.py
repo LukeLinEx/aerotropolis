@@ -6,6 +6,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
 from taoyuan_aerotropolis.helpers import *
 
+
 class TYCGCollecting(object):
     def __init__(self):
         pass
