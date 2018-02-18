@@ -14,10 +14,6 @@ class TYCGCollecting(object):
     @staticmethod
     def get_interested_content(content_url):
         content_soup = BeautifulSoup(requests.get(content_url).text)
-        # paras = content_soup.find_all("p")
-        #
-        # if interested_words_exist(paras):
-        #     return "<br><br>".join([str(p) for p in paras])
         paras = content_soup.find_all("div", {"id":"content_view"})[0]
         rows = paras.find_all("tr")
         lng = len(rows)
@@ -117,9 +113,5 @@ class UdnCollecting(object):
 if __name__ == "__main__":
     earliest = datetime(2018,2,18)
     co = TYCGCollecting().collect_interested_news(earliest)
-    n=0
-    print(co[n]["date_released"])
-    paras = co[n]["content"]
 
-    print(paras)
 
