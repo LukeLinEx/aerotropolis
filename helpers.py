@@ -21,10 +21,18 @@ def str2date(date_str):
     return datetime.strptime("-".join(date_str).strip(), "%Y-%m-%d")
 
 
+#  def interested_words_exist(paras):
+#     for p in paras:
+#         for w in words_interested:
+#             if re.search(w, p.text):
+#                 return True
+#
+#     return False
+
+
 def interested_words_exist(paras):
-    for p in paras:
-        for w in words_interested:
-            if re.search(w, p.text):
-                return True
+    for w in words_interested:
+        if re.search(w, paras):
+            return True
 
     return False

@@ -14,10 +14,20 @@ class TYCGCollecting(object):
     @staticmethod
     def get_interested_content(content_url):
         content_soup = BeautifulSoup(requests.get(content_url).text)
-        paras = content_soup.find_all("p")
+        # paras = content_soup.find_all("p")
+        #
+        # if interested_words_exist(paras):
+        #     return "<br><br>".join([str(p) for p in paras])
+        paras = content_soup.find_all("div", {"id":"content_view"})[0]
+        rows = paras.find_all("tr")
+        lng = len(rows)
+        for i in range(lng):
+            if rows[i].text.find("詳細內容：") != -1:
+                target = i + 1
 
+        paras = rows[target].text
         if interested_words_exist(paras):
-            return "<br><br>".join([str(p) for p in paras])
+            return paras
 
     def collect_interested_news(self, start_date):
         url = "http://www.tycg.gov.tw/ch/home.jsp?intpage=&id=9&parentpath=0%2C1&qptdate={start_date}&showedate=&qdldate=&keyword=請輸入關鍵字&page=1&pagesize=311".format(
@@ -105,6 +115,11 @@ class UdnCollecting(object):
 
 
 if __name__ == "__main__":
-	earliest = datetime(2018,1,30)
-	TYCGCollecting().collect_interested_news(earliest)
+    earliest = datetime(2018,2,18)
+    co = TYCGCollecting().collect_interested_news(earliest)
+    n=0
+    print(co[n]["date_released"])
+    paras = co[n]["content"]
+
+    print(paras)
 
