@@ -26,7 +26,7 @@ class TYCGCollecting(object):
             return paras
 
     def collect_interested_news(self, start_date):
-        url = "http://www.tycg.gov.tw/ch/home.jsp?intpage=&id=9&parentpath=0%2C1&qptdate={start_date}&showedate=&qdldate=&keyword=請輸入關鍵字&page=1&pagesize=311".format(
+        url = "http://www.tycg.gov.tw/ch/home.jsp?intpage=&id=9&parentpath=0%2C1&qptdate={start_date}&showedate=&qdldate=&keyword=&page=1&pagesize=311".format(
             start_date = str(start_date.date())
         )
 
@@ -111,7 +111,5 @@ class UdnCollecting(object):
 
 
 if __name__ == "__main__":
-    earliest = datetime(2018,2,18)
+    earliest = datetime(2018,2,26)
     co = TYCGCollecting().collect_interested_news(earliest)
-
-
